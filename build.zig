@@ -681,7 +681,9 @@ pub fn build(b: *std.Build) void {
     });
     tests.addIncludePath(b.path("libs/flecs"));
     tests.linkLibrary(lib);
-    tests.linkLibC();
+
+    if (target.result.os.tag != .emscripten)
+        tests_module.link_libc = true;
     b.installArtifact(tests);
 
     test_step.dependOn(&b.addRunArtifact(tests).step);
