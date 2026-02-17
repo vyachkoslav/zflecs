@@ -657,7 +657,8 @@ pub fn build(b: *std.Build) void {
         .linkage = if (opt_use_shared) .dynamic else .static,
         .root_module = module,
     });
-    lib.linkLibC();
+
+    module.link_libc = true;
     b.installArtifact(lib);
 
     if (target.result.os.tag == .windows) {
