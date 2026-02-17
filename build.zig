@@ -658,7 +658,8 @@ pub fn build(b: *std.Build) void {
         .root_module = module,
     });
 
-    module.link_libc = true;
+    if (target.result.os.tag != .emscripten)
+        module.link_libc = true;
     b.installArtifact(lib);
 
     if (target.result.os.tag == .windows) {
